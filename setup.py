@@ -13,7 +13,7 @@ setup(
     url='https://github.com/CanisLupus25/sdamgia-api-extended',
     license='MIT',
     install_requires=['requests', 'beautifulsoup4', 'pyppeteer', 'grabzit', 'html2image', 'aiohttp'],
-    packages = ['sdamgia-extended-extended'],
+    packages = ['sdamgia-extended'],
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
