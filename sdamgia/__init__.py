@@ -130,8 +130,12 @@ class SdamGIA:
                 pass
             except AttributeError:
                 pass
+
+            ONLY_TEXT = True
+            if (not probBlock.find('div', {'class': 'pbody'}).find('table') is None) or CONDITION['images']:
+                ONLY_TEXT = False
             result = {'id': ID, 'topic': TOPIC_ID, 'condition': CONDITION, 'solution': SOLUTION, 'answer': ANSWER,
-                      'analogs': ANALOGS, 'url': URL}
+                      'analogs': ANALOGS, 'url': URL, 'only_text': ONLY_TEXT}
             problems.append(result)
         return problems
 
@@ -374,8 +378,8 @@ if __name__ == '__main__':
     categories = sorted(categories, key=lambda s: int(s))
     print(categories)
     print('Please, wait..')
-    main_ids = sdamgia.get_category_by_id('math', ['1'])
-    main_problems = list(filter(lambda s: not s['condition']['images'], sdamgia.get_problem_by_id('math', main_ids)))
+    main_ids = sdamgia.get_category_by_id('math', categories)
+    main_problems = list(filter(lambda s: s['only_text'], sdamgia.get_problem_by_id('math', main_ids)))
     for i in main_problems:
         print(i)
     print(len(main_ids))
@@ -393,5 +397,3 @@ if __name__ == '__main__':
         all_pbs_with_no_image.write('\n')
     pbs.close()
     all_pbs_with_no_image.close()
-
-
