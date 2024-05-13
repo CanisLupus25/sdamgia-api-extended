@@ -21,7 +21,7 @@ class SdamGIA:
         if exam.strip().lower() != 'oge':
             exam = 'ege'
         self.exam = exam
-        self._BASE_DOMAIN = 'sdamgia.ru'
+        self._BASE_DOMAIN = 'sdamgia-extended.ru'
         self._SUBJECT_BASE_URL = {
             'math': f'https://math-{exam}.{self._BASE_DOMAIN}', 'mathb': f'https://mathb-ege.{self._BASE_DOMAIN}',
             'phys': f'https://phys-{exam}.{self._BASE_DOMAIN}',
@@ -84,7 +84,7 @@ class SdamGIA:
                 return None
 
             for i in probBlock.find_all('img'):
-                if not 'sdamgia.ru' in i['src']:
+                if not 'sdamgia-extended.ru' in i['src']:
                     i['src'] = self._SUBJECT_BASE_URL[subject] + i['src']
 
             TOPIC_ID = ' '.join(probBlock.find(

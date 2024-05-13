@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(
-    name='sdamgia-api-extended',
+    name='sdamgia-extended-api-extended',
     version='0.1.9',
     author='anijack, CanisLupus25',
     author_email='anijackich@gmail.com',
@@ -13,7 +13,7 @@ setup(
     url='https://github.com/anijackich/sdamgia-api',
     license='MIT',
     install_requires=['requests', 'beautifulsoup4', 'pyppeteer', 'grabzit', 'html2image', 'aiohttp'],
-    packages = ['sdamgia-extended'],
+    packages = ['sdamgia-extended-extended'],
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
