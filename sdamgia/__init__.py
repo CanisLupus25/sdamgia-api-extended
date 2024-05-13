@@ -87,11 +87,11 @@ class SdamGIA:
                 if not 'sdamgia.ru' in i['src']:
                     i['src'] = self._SUBJECT_BASE_URL[subject] + i['src']
 
-            URL = f'{self._SUBJECT_BASE_URL[subject]}/problem?id={ids}'
-
             TOPIC_ID = ' '.join(probBlock.find(
                 'span', {'class': 'prob_nums'}).text.split()[1:][:-2])
             ID = probBlock.find('span', {'class': 'prob_nums'}).find('a').text
+
+            URL = f'{self._SUBJECT_BASE_URL[subject]}/problem?id={ID}'
 
             CONDITION, SOLUTION, ANSWER, ANALOGS = {}, {}, '', []
 
@@ -374,7 +374,7 @@ if __name__ == '__main__':
     categories = sorted(categories, key=lambda s: int(s))
     print(categories)
     print('Please, wait..')
-    main_ids = sdamgia.get_category_by_id('math', categories)
+    main_ids = sdamgia.get_category_by_id('math', ['1'])
     main_problems = list(filter(lambda s: not s['condition']['images'], sdamgia.get_problem_by_id('math', main_ids)))
     for i in main_problems:
         print(i)
@@ -382,11 +382,16 @@ if __name__ == '__main__':
     print(len(main_problems))
     ids = open('ids.txt', mode='w', encoding='UTF-8')
     pbs = open('pbs.txt', mode='w', encoding='UTF-8')
+    all_pbs_with_no_image = open('noimg_problems.txt', mode='w', encoding='UTF-8')
+    all_analogs = []
     print('\n'.join([i['id'] for i in main_problems]), file=ids)
     ids.close()
     for i in main_problems:
         pbs.write(i['condition']['text'])
         pbs.write('\n')
+        all_pbs_with_no_image.write('\n'.join(filter(lambda s: s != '...', i['analogs'])))
+        all_pbs_with_no_image.write('\n')
     pbs.close()
-    all_pbs_with_no_image = open('noimg_problems.txt', mode='w', encoding='UTF-8')
-    all_analogs = []
+    all_pbs_with_no_image.close()
+
+
