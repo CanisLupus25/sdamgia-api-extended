@@ -40,6 +40,7 @@ sdamgia = SdamGIA()
 ```
 
 ### Поиск задачи по ее идентификатору
+
 ```python
 subject = 'math'
 id = '1001'
@@ -63,6 +64,7 @@ sdamgia.get_problem_by_id(subject, id)
 }
 ```
 Можно сгенерировать задачу в виде изображения:
+
 ```python
 path_to_img = '/imgs/problem.png'
 sdamgia.get_problem_by_id(subject, id, path_to_img=path_to_img)
