@@ -385,7 +385,7 @@ if __name__ == '__main__':
     print('\n'.join([i['id'] for i in main_problems]), file=ids)
     ids.close()
     for i in main_problems:
-        pbs.write(i['url'])
+        pbs.write(i['condition']['text'])
         pbs.write('\n')
     pbs.close()
     all_pbs_with_no_image = open('noimg_problems.txt', mode='w', encoding='UTF-8')
