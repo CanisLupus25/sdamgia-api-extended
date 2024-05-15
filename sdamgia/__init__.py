@@ -104,7 +104,7 @@ class SdamGIA:
                 pass
 
             try:
-                SOLUTION = {'text': probBlock.find_all('div', {'class': 'pbody'})[1].text.replace('\xad', '').replace('\xa0'),
+                SOLUTION = {'text': probBlock.find_all('div', {'class': 'pbody'})[1].text.replace('\xad', '').replace('\xa0', ''),
                             'images': [i['src'] for i in
                                        probBlock.find_all('div', {'class': 'pbody'})[1].find_all('img')]
                             }
