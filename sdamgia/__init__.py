@@ -96,7 +96,7 @@ class SdamGIA:
             CONDITION, SOLUTION, ANSWER, ANALOGS = {}, {}, '', []
 
             try:
-                CONDITION = {'text': probBlock.find_all('div', {'class': 'pbody'})[0].text.replace('\xad', ''),
+                CONDITION = {'text': probBlock.find_all('div', {'class': 'pbody'})[0].text.replace('\xad', '').replace('\xa0', ''),
                              'images': [i['src'] for i in
                                         probBlock.find_all('div', {'class': 'pbody'})[0].find_all('img')]
                              }
@@ -104,7 +104,7 @@ class SdamGIA:
                 pass
 
             try:
-                SOLUTION = {'text': probBlock.find_all('div', {'class': 'pbody'})[1].text.replace('\xad', ''),
+                SOLUTION = {'text': probBlock.find_all('div', {'class': 'pbody'})[1].text.replace('\xad', '').replace('\xa0'),
                             'images': [i['src'] for i in
                                        probBlock.find_all('div', {'class': 'pbody'})[1].find_all('img')]
                             }
@@ -370,30 +370,4 @@ class SdamGIA:
 
 if __name__ == '__main__':
     sdamgia = SdamGIA(exam='oge')
-    catalogue = sdamgia.get_catalog('math')
-    categories = []
-    for topic in catalogue:
-        for category in topic['categories']:
-            categories.append(category['category_id'])
-    categories = sorted(categories, key=lambda s: int(s))
-    print(categories)
-    print('Please, wait..')
-    main_ids = sdamgia.get_category_by_id('math', categories)
-    main_problems = list(filter(lambda s: s['only_text'], sdamgia.get_problem_by_id('math', main_ids)))
-    for i in main_problems:
-        print(i)
-    print(len(main_ids))
-    print(len(main_problems))
-    ids = open('ids.txt', mode='w', encoding='UTF-8')
-    pbs = open('pbs.txt', mode='w', encoding='UTF-8')
-    all_pbs_with_no_image = open('noimg_problems.txt', mode='w', encoding='UTF-8')
-    all_analogs = []
-    print('\n'.join([i['id'] for i in main_problems]), file=ids)
-    ids.close()
-    for i in main_problems:
-        pbs.write(i['condition']['text'])
-        pbs.write('\n')
-        all_pbs_with_no_image.write('\n'.join(filter(lambda s: s != '...', i['analogs'])))
-        all_pbs_with_no_image.write('\n')
-    pbs.close()
-    all_pbs_with_no_image.close()
+    print(sdamgia.get_problem_by_id('math', ['404147']))
