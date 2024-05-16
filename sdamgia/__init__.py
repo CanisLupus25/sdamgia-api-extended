@@ -96,18 +96,22 @@ class SdamGIA:
             CONDITION, SOLUTION, ANSWER, ANALOGS = {}, {}, '', []
 
             try:
-                CONDITION = {'text': probBlock.find_all('div', {'class': 'pbody'})[0].text.replace('\xad', '').replace('\xa0', ''),
-                             'images': [i['src'] for i in
-                                        probBlock.find_all('div', {'class': 'pbody'})[0].find_all('img')]
-                             }
+                CONDITION = {
+                    'text': probBlock.find_all('div', {'class': 'pbody'})[0].text.replace('\xad', '').replace('\xa0',
+                                                                                                              ''),
+                    'images': [i['src'] for i in
+                               probBlock.find_all('div', {'class': 'pbody'})[0].find_all('img')]
+                }
             except IndexError:
                 pass
 
             try:
-                SOLUTION = {'text': probBlock.find_all('div', {'class': 'pbody'})[1].text.replace('\xad', '').replace('\xa0', ''),
-                            'images': [i['src'] for i in
-                                       probBlock.find_all('div', {'class': 'pbody'})[1].find_all('img')]
-                            }
+                SOLUTION = {
+                    'text': probBlock.find_all('div', {'class': 'pbody'})[1].text.replace('\xad', '').replace('\xa0',
+                                                                                                              ''),
+                    'images': [i['src'] for i in
+                               probBlock.find_all('div', {'class': 'pbody'})[1].find_all('img')]
+                }
             except IndexError:
                 pass
             except AttributeError:
@@ -133,6 +137,8 @@ class SdamGIA:
 
             ONLY_TEXT = True
             if (not probBlock.find('div', {'class': 'pbody'}).find('table') is None) or CONDITION['images']:
+                ONLY_TEXT = False
+            if not probBlock.find('div', {'class': 'pbody'}).find('sup') is None:
                 ONLY_TEXT = False
             result = {'id': ID, 'topic': TOPIC_ID, 'condition': CONDITION, 'solution': SOLUTION, 'answer': ANSWER,
                       'analogs': ANALOGS, 'url': URL, 'only_text': ONLY_TEXT}
@@ -366,8 +372,3 @@ class SdamGIA:
             thread.join()
 
         return result
-
-
-if __name__ == '__main__':
-    sdamgia = SdamGIA(exam='oge')
-    print(sdamgia.get_problem_by_id('math', ['404147']))
